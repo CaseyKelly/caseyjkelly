@@ -12,8 +12,7 @@ export const metadata: Metadata = {
   description: "Software developer in Denver, Colorado",
   openGraph: {
     title: "caseyjkelly.com",
-    description:
-      "Software developer in Denver, Colorado",
+    description: "Software developer in Denver, Colorado",
     url: "https://caseyjkelly.com",
     siteName: "caseyjkelly.com",
     images: [
@@ -66,8 +65,9 @@ export default function RootLayout({
         <Analytics />
       </head>
       <body
-        className={`bg-black ${process.env.NODE_ENV === "development" ? "debug-screens" : undefined
-          }`}
+        className={`bg-black ${
+          process.env.NODE_ENV === "development" ? "debug-screens" : undefined
+        }`}
       >
         {children}
       </body>

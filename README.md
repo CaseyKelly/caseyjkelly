@@ -9,16 +9,15 @@ My personal website, built with [Next.js](https://nextjs.org/), [Tailwind CSS](h
 
 ## Running Locally
 
-
 ```sh-session
 git clone https://github.com/caseykelly/caseyjkelly.git
 cd caseyjkelly
 ```
 
-
 Create a `.env` file similar to `.env.example`
 
 Then install dependencies and run the development server:
+
 ```sh-session
 pnpm install
 pnpm dev
