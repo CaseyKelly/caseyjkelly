@@ -8,6 +8,7 @@ const navigation = [
     href: "https://casey-kelly-resume.s3.us-west-1.amazonaws.com/CaseyKellyResume.pdf",
     target: "_blank",
   },
+  { name: "Github", href: "https://github.com/CaseyKelly", target: "_blank" },
   { name: "Contact", href: "/contact" },
 ];
 
