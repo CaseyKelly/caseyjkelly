@@ -323,10 +323,14 @@ export default function Constellation({ className = "" }: ConstellationProps) {
       }
     };
 
-    const onPointerLeave = (event: PointerEvent) => {
-      if (event.pointerType === "mouse" && event.relatedTarget) return;
+    const deactivateCursor = () => {
       cursor.active = false;
       if (spotlightRef.current) spotlightRef.current.style.opacity = "0";
+    };
+
+    // a mouse stays on the page after a click; touch and pen lift off it
+    const onPointerUp = (event: PointerEvent) => {
+      if (event.pointerType !== "mouse") deactivateCursor();
     };
 
     resize();
@@ -340,18 +344,18 @@ export default function Constellation({ className = "" }: ConstellationProps) {
     window.addEventListener("resize", onResize);
     motionQuery.addEventListener("change", onMotionChange);
     window.addEventListener("pointermove", onPointerMove);
-    window.addEventListener("pointerup", onPointerLeave);
-    document.documentElement.addEventListener("pointerleave", onPointerLeave);
+    window.addEventListener("pointerup", onPointerUp);
+    document.documentElement.addEventListener("pointerleave", deactivateCursor);
 
     return () => {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener("resize", onResize);
       motionQuery.removeEventListener("change", onMotionChange);
       window.removeEventListener("pointermove", onPointerMove);
-      window.removeEventListener("pointerup", onPointerLeave);
+      window.removeEventListener("pointerup", onPointerUp);
       document.documentElement.removeEventListener(
         "pointerleave",
-        onPointerLeave,
+        deactivateCursor,
       );
     };
   }, []);
