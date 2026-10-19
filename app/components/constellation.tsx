@@ -92,9 +92,8 @@ export default function Constellation({ className = "" }: ConstellationProps) {
       return;
     }
 
-    const reducedMotion = window.matchMedia(
-      "(prefers-reduced-motion: reduce)",
-    ).matches;
+    const motionQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    let reducedMotion = motionQuery.matches;
     const size = { w: 0, h: 0 };
     const cursor = { x: 0, y: 0, active: false };
     const parallax = { x: 0, y: 0 };
@@ -284,11 +283,31 @@ export default function Constellation({ className = "" }: ConstellationProps) {
       frameId = window.requestAnimationFrame(loop);
     };
 
+    // jump past the intro burst, keeping the next shooting star as far away
+    const skipIntro = () => {
+      const now = performance.now();
+      const untilMeteor = Math.max(0, nextMeteorAt - (now - start));
+      start = now - INTRO_MS - 500;
+      nextMeteorAt = now - start + untilMeteor;
+    };
+
     const onResize = () => {
       resize();
       // don't replay the intro burst on every resize
-      start = performance.now() - INTRO_MS - 500;
+      skipIntro();
       if (reducedMotion) draw(performance.now());
+    };
+
+    const onMotionChange = (event: MediaQueryListEvent) => {
+      reducedMotion = event.matches;
+      window.cancelAnimationFrame(frameId);
+      if (reducedMotion) {
+        meteors = [];
+        draw(performance.now());
+      } else {
+        skipIntro();
+        frameId = window.requestAnimationFrame(loop);
+      }
     };
 
     const onPointerMove = (event: PointerEvent) => {
@@ -319,6 +338,7 @@ export default function Constellation({ className = "" }: ConstellationProps) {
     }
 
     window.addEventListener("resize", onResize);
+    motionQuery.addEventListener("change", onMotionChange);
     window.addEventListener("pointermove", onPointerMove);
     window.addEventListener("pointerup", onPointerLeave);
     document.documentElement.addEventListener("pointerleave", onPointerLeave);
@@ -326,6 +346,7 @@ export default function Constellation({ className = "" }: ConstellationProps) {
     return () => {
       window.cancelAnimationFrame(frameId);
       window.removeEventListener("resize", onResize);
+      motionQuery.removeEventListener("change", onMotionChange);
       window.removeEventListener("pointermove", onPointerMove);
       window.removeEventListener("pointerup", onPointerLeave);
       document.documentElement.removeEventListener(
