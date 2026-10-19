@@ -38,7 +38,11 @@ module.exports = {
       },
       animation: {
         "fade-in": "fade-in 3s ease-in-out forwards",
-        title: "title 3s ease-out forwards",
+        "letter-in": "letter-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        shine: "shine 7s ease-in-out 2.4s infinite",
+        nebula: "nebula 22s ease-in-out infinite alternate",
+        "fade-in-fast": "fade-in-fast 2.5s ease-out forwards",
+        "fade-up": "fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "fade-left": "fade-left 3s ease-in-out forwards",
         "fade-right": "fade-right 3s ease-in-out forwards",
       },
@@ -82,23 +86,53 @@ module.exports = {
             opacity: "0%",
           },
         },
-        title: {
+        "letter-in": {
           "0%": {
-            "line-height": "0%",
-            "letter-spacing": "0.25em",
+            opacity: "0",
+            transform: "translateY(0.35em) scale(0.9)",
+            filter: "blur(12px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0) scale(1)",
+            filter: "blur(0)",
+          },
+        },
+        nebula: {
+          "0%": {
+            transform: "translate(0, 0) scale(1)",
+          },
+          "50%": {
+            transform: "translate(6%, -4%) scale(1.15)",
+          },
+          "100%": {
+            transform: "translate(-4%, 5%) scale(0.95)",
+          },
+        },
+        "fade-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(8px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
+          },
+        },
+        "fade-in-fast": {
+          "0%": {
             opacity: "0",
           },
-          "25%": {
-            "line-height": "0%",
-            opacity: "0%",
-          },
-          "80%": {
-            opacity: "100%",
-          },
-
           "100%": {
-            "line-height": "100%",
-            opacity: "100%",
+            opacity: "1",
+          },
+        },
+        shine: {
+          "0%": {
+            "background-position": "150% 0",
+          },
+          "35%, 100%": {
+            "background-position": "-50% 0",
           },
         },
       },

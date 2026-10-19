@@ -6,14 +6,17 @@ import { Analytics } from "./components/analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://caseyjkelly.com"),
   title: {
     default: "Casey Kelly",
     template: "%s | caseyjkelly.com",
   },
-  description: "Software developer in Denver, Colorado",
+  description:
+    "Senior software engineer in Denver, CO building accessible React and TypeScript products.",
   openGraph: {
     title: "Casey Kelly",
-    description: "Software developer in Denver, Colorado",
+    description:
+      "Senior software engineer in Denver, CO building accessible React and TypeScript products.",
     url: "https://caseyjkelly.com",
     siteName: "caseyjkelly.com",
     images: [

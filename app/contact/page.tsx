@@ -1,15 +1,17 @@
 "use client";
-import { Github, Mail, Twitter } from "lucide-react";
+import { Github, Linkedin, Mail } from "lucide-react";
 import Link from "next/link";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
+import Sky from "../components/sky";
 
 const socials = [
   {
-    icon: <Twitter size={20} />,
-    href: "https://twitter.com/caseyk819",
-    label: "Twitter",
-    handle: "@caseyk819",
+    icon: <Linkedin size={20} />,
+    href: "https://www.linkedin.com/in/caseyjkelly",
+    target: "_blank",
+    label: "LinkedIn",
+    handle: "caseyjkelly",
   },
   {
     icon: <Mail size={20} />,
@@ -20,26 +22,31 @@ const socials = [
   {
     icon: <Github size={20} />,
     href: "https://github.com/CaseyKelly",
+    target: "_blank",
     label: "Github",
     handle: "CaseyKelly",
   },
 ];
 
-export default function Example() {
+export default function Contact() {
   return (
-    <div className=" bg-gradient-to-tl from-zinc-900/0 via-zinc-900 to-zinc-900/0">
+    <main className="relative isolate min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+      <Sky className="opacity-70" />
       <Navigation />
-      <div className="container flex items-center justify-center min-h-screen px-4 mx-auto">
-        <div className="grid w-full grid-cols-1 gap-8 mx-auto mt-32 sm:mt-0 sm:grid-cols-3 lg:gap-16">
+      <div className="container flex flex-col items-center justify-center min-h-[100dvh] px-4 py-20 mx-auto">
+        <h1 className="mb-10 text-3xl text-center text-white opacity-0 font-display sm:text-4xl md:mb-14 animate-fade-up motion-reduce:animate-none motion-reduce:opacity-100">
+          Get in touch
+        </h1>
+        <div className="grid w-full grid-cols-1 gap-6 mx-auto sm:grid-cols-3 lg:gap-12">
           {socials.map((s) => (
-            <Card>
+            <Card key={s.label}>
               <Link
                 href={s.href}
-                target="_blank"
-                className="p-4 relative flex flex-col items-center gap-4 duration-700 group md:gap-8 md:py-24  lg:pb-48  md:p-16"
+                target={s.target}
+                className="relative flex flex-col items-center gap-4 p-6 duration-700 rounded-xl group md:gap-8 md:px-10 md:pt-20 md:pb-24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-300/70"
               >
                 <span
-                  className="absolute w-px h-2/3 bg-gradient-to-b from-zinc-500 via-zinc-500/50 to-transparent"
+                  className="absolute hidden w-px md:block h-2/3 bg-gradient-to-b from-zinc-500 via-zinc-500/50 to-transparent"
                   aria-hidden="true"
                 />
                 <span className="relative z-10 flex items-center justify-center w-12 h-12 text-sm duration-1000 border rounded-full text-zinc-200 group-hover:text-white group-hover:bg-zinc-900 border-zinc-500 bg-zinc-900 group-hover:border-zinc-200 drop-shadow-orange">
@@ -58,6 +65,6 @@ export default function Example() {
           ))}
         </div>
       </div>
-    </div>
+    </main>
   );
 }
