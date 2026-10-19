@@ -3,6 +3,7 @@ import React from "react";
 import Sky from "./components/sky";
 
 const navigation = [
+  { name: "Projects", href: "/projects" },
   {
     name: "Resume",
     href: "/CaseyKellyResume.pdf",
