@@ -8,6 +8,8 @@ const navigation = [
     name: "Resume",
     href: "/CaseyKellyResume.pdf",
     target: "_blank",
+    // a file, not a route: prefetching would download the whole PDF on load
+    prefetch: false,
   },
   { name: "Github", href: "https://github.com/CaseyKelly", target: "_blank" },
   {
@@ -40,6 +42,7 @@ export default function Home() {
               <Link
                 href={item.href}
                 target={item.target}
+                prefetch={item.prefetch}
                 className="block px-3 py-2 text-sm transition-colors duration-300 rounded-md text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
               >
                 {item.name}
