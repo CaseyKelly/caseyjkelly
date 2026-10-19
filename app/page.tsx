@@ -5,10 +5,15 @@ import Constellation from "./components/constellation";
 const navigation = [
   {
     name: "Resume",
-    href: "https://casey-kelly-resume.s3.us-west-1.amazonaws.com/CaseyKellyResume.pdf",
+    href: "/CaseyKellyResume.pdf",
     target: "_blank",
   },
   { name: "Github", href: "https://github.com/CaseyKelly", target: "_blank" },
+  {
+    name: "LinkedIn",
+    href: "https://www.linkedin.com/in/caseyjkelly",
+    target: "_blank",
+  },
   { name: "Contact", href: "/contact" },
 ];
 
@@ -69,9 +74,10 @@ export default function Home() {
 
       <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
       <div className="px-6 my-16 text-center animate-fade-in">
-        <h2 className="text-sm text-zinc-500 ">
-          I'm a full-stack software engineer from Denver, CO with 9 years of
-          experience crafting engaging experiences for the web.
+        <h2 className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-500">
+          Senior software engineer in Denver, CO. 10+ years building accessible
+          React and TypeScript products, most recently in healthcare payments at
+          Paytient.
         </h2>
       </div>
     </div>
