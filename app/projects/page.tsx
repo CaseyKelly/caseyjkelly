@@ -17,14 +17,14 @@ const projects = [
     tagline: "Fantasy sports for Phish fans",
     description:
       "Pick 13 songs before each show, score points live as the band plays them, and climb the tour leaderboard. Scores update every 10 minutes during a show from phish.net setlists, picks lock at 7 PM in each venue's time zone, and it installs on your phone as a PWA.",
-    // from the production database; round down so they stay true as it grows
+    // from the production database as of Oct 2026; round down so they stay
+    // true as it grows
     stats: [
       { value: "200+", label: "players" },
       { value: "600+", label: "entries" },
       { value: "8,000+", label: "song picks" },
       { value: "46", label: "shows" },
     ],
-    statsAsOf: "Oct 2026",
     image: "/projects/fantasyphish.webp",
     imageAlt: "FantasyPhish landing page with the song picker",
     stack: [
@@ -95,9 +95,6 @@ export default function Projects() {
                         </div>
                       ))}
                     </dl>
-                    <p className="mt-2 text-xs text-zinc-500">
-                      Usage as of {project.statsAsOf}
-                    </p>
                     <ul
                       aria-label="Built with"
                       className="flex flex-wrap gap-1.5 mt-5"
