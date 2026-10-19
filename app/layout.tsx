@@ -6,6 +6,7 @@ import { Analytics } from "./components/analytics";
 import { Analytics as VercelAnalytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://caseyjkelly.com"),
   title: {
     default: "Casey Kelly",
     template: "%s | caseyjkelly.com",

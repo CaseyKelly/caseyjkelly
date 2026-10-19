@@ -42,6 +42,7 @@ module.exports = {
         shine: "shine 7s ease-in-out 2.4s infinite",
         nebula: "nebula 22s ease-in-out infinite alternate",
         "fade-in-fast": "fade-in-fast 2.5s ease-out forwards",
+        "fade-up": "fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
         "fade-left": "fade-left 3s ease-in-out forwards",
         "fade-right": "fade-right 3s ease-in-out forwards",
       },
@@ -106,6 +107,16 @@ module.exports = {
           },
           "100%": {
             transform: "translate(-4%, 5%) scale(0.95)",
+          },
+        },
+        "fade-up": {
+          "0%": {
+            opacity: "0",
+            transform: "translateY(8px)",
+          },
+          "100%": {
+            opacity: "1",
+            transform: "translateY(0)",
           },
         },
         "fade-in-fast": {

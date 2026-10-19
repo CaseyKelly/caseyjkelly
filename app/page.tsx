@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Constellation from "./components/constellation";
+import Sky from "./components/sky";
 
 const navigation = [
   {
@@ -25,30 +25,30 @@ const letters = Array.from(name, (char, position) => ({
 
 export default function Home() {
   return (
-    <div className="relative isolate flex flex-col items-center justify-center w-screen h-screen overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
-      <nav className="my-16 animate-fade-in">
-        <ul className="flex items-center justify-center gap-4">
+    // min-h + w-full rather than h-screen/w-screen: 100vw includes the
+    // scrollbar width and 100vh ignores mobile browser toolbars, and both
+    // cause stray scrollbars
+    <main className="relative isolate flex flex-col items-center justify-center w-full min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+      <nav
+        aria-label="Primary"
+        className="my-16 opacity-0 animate-fade-up [animation-delay:1300ms] motion-reduce:animate-none motion-reduce:opacity-100"
+      >
+        <ul className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 px-4">
           {navigation.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              target={item.target}
-              className="text-sm duration-500 text-zinc-500 hover:text-zinc-300"
-            >
-              {item.name}
-            </Link>
+            <li key={item.href}>
+              <Link
+                href={item.href}
+                target={item.target}
+                className="block px-3 py-2 text-sm transition-colors duration-300 rounded-md text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
+              >
+                {item.name}
+              </Link>
+            </li>
           ))}
         </ul>
       </nav>
-      <div className="hidden w-screen h-px animate-glow md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
-      <div
-        aria-hidden="true"
-        className="absolute inset-0 overflow-hidden pointer-events-none -z-20 animate-fade-in-fast"
-      >
-        <div className="absolute left-[18%] top-[22%] h-[38rem] w-[38rem] rounded-full bg-indigo-500/20 blur-[120px] animate-nebula motion-reduce:animate-none" />
-        <div className="absolute right-[12%] bottom-[8%] h-[32rem] w-[32rem] rounded-full bg-fuchsia-500/10 blur-[120px] animate-nebula motion-reduce:animate-none [animation-delay:-11s]" />
-      </div>
-      <Constellation className="absolute inset-0 -z-10" />
+      <div className="hidden w-full h-px md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <Sky />
       <h1
         aria-label={name}
         className="relative z-10 [font-kerning:none] text-4xl text-white cursor-default font-display sm:text-6xl md:text-9xl whitespace-nowrap [text-shadow:0_0_40px_rgba(165,180,252,0.35)]"
@@ -72,14 +72,14 @@ export default function Home() {
         </span>
       </h1>
 
-      <div className="hidden w-screen h-px animate-glow md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
-      <div className="px-6 my-16 text-center animate-fade-in">
-        <h2 className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-500">
+      <div className="hidden w-full h-px md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="px-6 my-16 text-center opacity-0 animate-fade-up [animation-delay:1600ms] motion-reduce:animate-none motion-reduce:opacity-100">
+        <p className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-400">
           Senior software engineer in Denver, CO. 10+ years building accessible
           React and TypeScript products, most recently in healthcare payments at
           Paytient.
-        </h2>
+        </p>
       </div>
-    </div>
+    </main>
   );
 }
