@@ -23,7 +23,7 @@ const navigation = [
 const name = "casey kelly";
 const letters = Array.from(name, (char, position) => ({
   char: char === " " ? "\u00A0" : char,
-  delay: 700 + position * 70,
+  delay: 150 + position * 55,
 }));
 
 export default function Home() {
@@ -34,7 +34,7 @@ export default function Home() {
     <main className="relative isolate flex flex-col items-center justify-center w-full min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
       <nav
         aria-label="Primary"
-        className="my-16 opacity-0 animate-fade-up [animation-delay:1300ms] motion-reduce:animate-none motion-reduce:opacity-100"
+        className="my-16 opacity-0 animate-fade-up [animation-delay:700ms] motion-reduce:animate-none motion-reduce:opacity-100"
       >
         <ul className="flex flex-wrap items-center justify-center gap-x-1 gap-y-2 px-4">
           {navigation.map((item) => (
@@ -77,7 +77,7 @@ export default function Home() {
       </h1>
 
       <div className="hidden w-full h-px md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
-      <div className="px-6 my-16 text-center opacity-0 animate-fade-up [animation-delay:1600ms] motion-reduce:animate-none motion-reduce:opacity-100">
+      <div className="px-6 my-16 text-center opacity-0 animate-fade-up [animation-delay:900ms] motion-reduce:animate-none motion-reduce:opacity-100">
         <p className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-400">
           Senior software engineer in Denver, CO. 10+ years building accessible
           React and TypeScript products, most recently in healthcare payments at

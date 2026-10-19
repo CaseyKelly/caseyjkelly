@@ -41,8 +41,31 @@ const PARALLAX = 28;
 const INTRO_MS = 2400;
 const METEOR_LENGTH = 160;
 const ACCENT = "165, 180, 252"; // tailwind indigo-300
+// stars are sub-pixel dots, so rendering past 2x density costs fill rate for nothing
+const MAX_DPR = 2;
+// alpha is quantized so each layer draws in at most this many fill/stroke calls
+const ALPHA_STEPS = 16;
 
 const clamp01 = (n: number): number => Math.min(1, Math.max(0, n));
+
+const alphaBuckets = (): Path2D[] =>
+  Array.from({ length: ALPHA_STEPS + 1 }, () => new Path2D());
+
+const bucketOf = (alpha: number): number =>
+  Math.round(clamp01(alpha) * ALPHA_STEPS);
+
+function drawBuckets(
+  ctx: CanvasRenderingContext2D,
+  buckets: Path2D[],
+  mode: "fill" | "stroke",
+): void {
+  for (let k = 1; k <= ALPHA_STEPS; k++) {
+    ctx.globalAlpha = k / ALPHA_STEPS;
+    if (mode === "fill") ctx.fill(buckets[k]);
+    else ctx.stroke(buckets[k]);
+  }
+  ctx.globalAlpha = 1;
+}
 const easeOutExpo = (t: number): number => (t >= 1 ? 1 : 1 - 2 ** (-10 * t));
 
 function createStar(w: number, h: number): Star {
@@ -98,13 +121,17 @@ export default function Constellation({ className = "" }: ConstellationProps) {
     const cursor = { x: 0, y: 0, active: false };
     const parallax = { x: 0, y: 0 };
     let stars: Star[] = [];
+    // per-star screen position and opacity, reused across frames
+    let sx = new Float32Array(0);
+    let sy = new Float32Array(0);
+    let visibility = new Float32Array(0);
     let meteors: Meteor[] = [];
     let nextMeteorAt = 3500;
     let start = performance.now();
     let frameId = 0;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, MAX_DPR);
       size.w = container.offsetWidth;
       size.h = container.offsetHeight;
       canvas.width = size.w * dpr;
@@ -118,6 +145,9 @@ export default function Constellation({ className = "" }: ConstellationProps) {
         Math.round((size.w * size.h) / PIXELS_PER_STAR),
       );
       stars = Array.from({ length: count }, () => createStar(size.w, size.h));
+      sx = new Float32Array(count);
+      sy = new Float32Array(count);
+      visibility = new Float32Array(count);
     };
 
     const draw = (now: number) => {
@@ -134,9 +164,8 @@ export default function Constellation({ className = "" }: ConstellationProps) {
 
       ctx.clearRect(0, 0, w, h);
 
-      const sx = new Float32Array(stars.length);
-      const sy = new Float32Array(stars.length);
-      const visibility = new Float32Array(stars.length);
+      const halos = alphaBuckets();
+      const dots = alphaBuckets();
 
       stars.forEach((star, i) => {
         if (!reducedMotion) {
@@ -186,19 +215,23 @@ export default function Constellation({ className = "" }: ConstellationProps) {
 
         if (star.z > 0.75) {
           // soft halo on the nearest stars
-          ctx.beginPath();
-          ctx.arc(x, y, star.size * 3.5, 0, Math.PI * 2);
-          ctx.fillStyle = `rgba(${ACCENT}, ${a * 0.18})`;
-          ctx.fill();
+          const halo = halos[bucketOf(a * 0.18)];
+          halo.moveTo(x + star.size * 3.5, y);
+          halo.arc(x, y, star.size * 3.5, 0, Math.PI * 2);
         }
-        ctx.beginPath();
-        ctx.arc(x, y, star.size, 0, Math.PI * 2);
-        ctx.fillStyle = `rgba(255, 255, 255, ${a})`;
-        ctx.fill();
+        const dot = dots[bucketOf(a)];
+        dot.moveTo(x + star.size, y);
+        dot.arc(x, y, star.size, 0, Math.PI * 2);
       });
 
+      ctx.fillStyle = `rgb(${ACCENT})`;
+      drawBuckets(ctx, halos, "fill");
+      ctx.fillStyle = "#fff";
+      drawBuckets(ctx, dots, "fill");
+
       // constellation lines between nearby foreground stars
-      ctx.lineWidth = 0.8;
+      const whiteLines = alphaBuckets();
+      const accentLines = alphaBuckets();
       for (let i = 0; i < stars.length; i++) {
         if (stars[i].z < 0.3) continue;
         for (let j = i + 1; j < stars.length; j++) {
@@ -213,21 +246,19 @@ export default function Constellation({ className = "" }: ConstellationProps) {
             (1 - d / LINK_DISTANCE) *
             0.4 *
             Math.min(visibility[i], visibility[j]);
-          let color = "255, 255, 255";
+          let lines = whiteLines;
           if (cursor.active) {
             const mx = (sx[i] + sx[j]) / 2 - cursor.x;
             const my = (sy[i] + sy[j]) / 2 - cursor.y;
             const near = 1 - Math.hypot(mx, my) / CURSOR_RADIUS;
             if (near > 0) {
               a += near * 0.7 * Math.min(visibility[i], visibility[j]);
-              color = ACCENT;
+              lines = accentLines;
             }
           }
-          ctx.beginPath();
-          ctx.moveTo(sx[i], sy[i]);
-          ctx.lineTo(sx[j], sy[j]);
-          ctx.strokeStyle = `rgba(${color}, ${a})`;
-          ctx.stroke();
+          const line = lines[bucketOf(a)];
+          line.moveTo(sx[i], sy[i]);
+          line.lineTo(sx[j], sy[j]);
         }
       }
 
@@ -237,15 +268,20 @@ export default function Constellation({ className = "" }: ConstellationProps) {
           if (stars[i].z < 0.3) continue;
           const d = Math.hypot(sx[i] - cursor.x, sy[i] - cursor.y);
           if (d > CURSOR_RADIUS * 0.8) continue;
-          ctx.beginPath();
-          ctx.moveTo(cursor.x, cursor.y);
-          ctx.lineTo(sx[i], sy[i]);
-          ctx.strokeStyle = `rgba(${ACCENT}, ${
-            (1 - d / (CURSOR_RADIUS * 0.8)) * 0.75 * visibility[i]
-          })`;
-          ctx.stroke();
+          const line =
+            accentLines[
+              bucketOf((1 - d / (CURSOR_RADIUS * 0.8)) * 0.75 * visibility[i])
+            ];
+          line.moveTo(cursor.x, cursor.y);
+          line.lineTo(sx[i], sy[i]);
         }
       }
+
+      ctx.lineWidth = 0.8;
+      ctx.strokeStyle = "#fff";
+      drawBuckets(ctx, whiteLines, "stroke");
+      ctx.strokeStyle = `rgb(${ACCENT})`;
+      drawBuckets(ctx, accentLines, "stroke");
 
       if (!reducedMotion) {
         if (elapsed > nextMeteorAt) {
