@@ -25,6 +25,15 @@ export const test = base.extend<{ pageErrors: string[] }>({
           errors.push(`${response.status()} ${response.url()}`);
         }
       });
+      // requests that never got a response (connection reset, DNS, CORS...)
+      page.on("requestfailed", (request) => {
+        if (request.isNavigationRequest()) return;
+        const reason = request.failure()?.errorText ?? "unknown error";
+        // the browser cancels in-flight requests (e.g. prefetches) when the
+        // page navigates away; that isn't a broken asset
+        if (reason === "net::ERR_ABORTED") return;
+        errors.push(`${reason} ${request.url()}`);
+      });
 
       await use(errors);
       expect(errors, "page errors, console errors or failed requests").toEqual(
