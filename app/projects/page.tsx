@@ -92,6 +92,7 @@ export default function Projects() {
                       width={1280}
                       height={800}
                       sizes="(min-width: 768px) 560px, 100vw"
+                      priority
                       className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
                     />
                   </Link>

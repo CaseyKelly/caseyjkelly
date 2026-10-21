@@ -38,8 +38,8 @@ module.exports = {
       },
       animation: {
         "fade-in": "fade-in 3s ease-in-out forwards",
-        "letter-in": "letter-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
-        shine: "shine 7s ease-in-out 2.4s infinite",
+        "letter-in": "letter-in 0.7s cubic-bezier(0.22, 1, 0.36, 1) forwards",
+        shine: "shine 7s ease-in-out 1.6s infinite",
         nebula: "nebula 22s ease-in-out infinite alternate",
         "fade-in-fast": "fade-in-fast 2.5s ease-out forwards",
         "fade-up": "fade-up 0.9s cubic-bezier(0.22, 1, 0.36, 1) forwards",
