@@ -1,4 +1,5 @@
-import { ArrowUpRight, Github } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
+import { Github } from "../components/brand-icons";
 import { Link } from "react-router";
 import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
