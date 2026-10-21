@@ -45,7 +45,7 @@ const projects = [
     name: "Kelso Kelly Music",
     tagline: "A musician's website that runs itself",
     description:
-      "A production site for a Northern Colorado musician that uses Google Workspace as the CMS. He adds a gig to Google Calendar or drops photos and videos into Drive, and push-notification webhooks sync it to the site within seconds: photos (even iPhone HEIC files) are converted to WebP and served from a CDN, and raw videos are uploaded to YouTube by a GitHub Actions job.",
+      "A production site for a Northern Colorado musician that uses Google Workspace as the CMS. He adds a gig to Google Calendar or drops photos and videos into Drive, and push-notification webhooks sync it to the site within seconds: photos are converted to WebP and served from a CDN, and raw videos are uploaded to YouTube by a GitHub Actions job.",
     image: "/projects/kelso-kelly.webp",
     imageAlt: "Kelso Kelly Music homepage",
     stack: [
