@@ -1,6 +1,6 @@
 # AGENTS.md
 
-Casey Kelly's personal site: React Router 7 in framework mode, Tailwind CSS 3, deployed to Vercel. See `README.md` for setup; this file covers what an agent needs on top of it.
+Casey Kelly's personal site: React Router 7 in framework mode, Tailwind CSS 4, deployed to Vercel. See `README.md` for setup; this file covers what an agent needs on top of it.
 
 ## Before you push
 

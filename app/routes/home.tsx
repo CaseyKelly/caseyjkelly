@@ -34,7 +34,7 @@ export default function Home() {
     // min-h + w-full rather than h-screen/w-screen: 100vw includes the
     // scrollbar width and 100vh ignores mobile browser toolbars, and both
     // cause stray scrollbars
-    <main className="relative isolate flex flex-col items-center justify-center w-full min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+    <main className="relative isolate flex flex-col items-center justify-center w-full min-h-dvh overflow-hidden bg-linear-to-tl from-black via-zinc-600/20 to-black">
       <nav
         aria-label="Primary"
         className="my-16 opacity-0 animate-fade-up [animation-delay:700ms] motion-reduce:animate-none motion-reduce:opacity-100"
@@ -47,7 +47,7 @@ export default function Home() {
                 target={item.target}
                 reloadDocument={item.reloadDocument}
                 prefetch={item.prefetch}
-                className="block px-3 py-2 text-sm transition-colors duration-300 rounded-md text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
+                className="block px-3 py-2 text-sm transition-colors duration-300 rounded-md text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70"
               >
                 {item.name}
               </Link>
@@ -55,7 +55,7 @@ export default function Home() {
           ))}
         </ul>
       </nav>
-      <div className="hidden w-full h-px md:block animate-fade-left bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="hidden w-full h-px md:block animate-fade-left bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
       <Sky />
       <h1
         aria-label={name}
@@ -74,13 +74,13 @@ export default function Home() {
         {/* a band of light that sweeps across the name once it has landed */}
         <span
           aria-hidden="true"
-          className="absolute inset-0 text-transparent [font-kerning:none] bg-clip-text bg-[length:250%_100%] bg-no-repeat bg-[linear-gradient(110deg,transparent_40%,rgba(199,210,254,0.95)_50%,transparent_60%)] animate-shine motion-reduce:hidden [text-shadow:none]"
+          className="absolute inset-0 text-transparent [font-kerning:none] bg-clip-text bg-size-[250%_100%] bg-no-repeat bg-[linear-gradient(110deg,transparent_40%,rgba(199,210,254,0.95)_50%,transparent_60%)] animate-shine motion-reduce:hidden text-shadow-none"
         >
           {name.replace(" ", "\u00A0")}
         </span>
       </h1>
 
-      <div className="hidden w-full h-px md:block animate-fade-right bg-gradient-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
+      <div className="hidden w-full h-px md:block animate-fade-right bg-linear-to-r from-zinc-300/0 via-zinc-300/50 to-zinc-300/0" />
       <div className="px-6 my-16 text-center opacity-0 animate-fade-up [animation-delay:900ms] motion-reduce:animate-none motion-reduce:opacity-100">
         <p className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-400">
           Senior software engineer in Denver, CO. 10+ years building accessible
