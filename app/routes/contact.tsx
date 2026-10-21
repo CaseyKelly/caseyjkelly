@@ -1,4 +1,5 @@
-import { Github, Linkedin, Mail } from "lucide-react";
+import { Mail } from "lucide-react";
+import { Github, Linkedin } from "../components/brand-icons";
 import { Link } from "react-router";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
