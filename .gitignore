@@ -38,3 +38,8 @@ next-env.d.ts
 
 .contentlayer
 .vscode
+
+# playwright
+/test-results/
+/playwright-report/
+/blob-report/
