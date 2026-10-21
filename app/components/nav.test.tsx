@@ -1,10 +1,11 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
+import { renderWithRouter } from "../test-utils";
 import { Navigation } from "./nav";
 
 describe("Navigation", () => {
   it("links back to the homepage", () => {
-    render(<Navigation />);
+    renderWithRouter(Navigation);
 
     expect(screen.getByRole("link", { name: "Back to home" })).toHaveAttribute(
       "href",
@@ -16,8 +17,7 @@ describe("Navigation", () => {
     type Report = (entries: Partial<IntersectionObserverEntry>[]) => void;
     let report: Report = () => {};
     const disconnect = vi.fn();
-    // next/link also observes its anchor for prefetching; only the observer
-    // watching the <header> belongs to Navigation
+    // only the observer watching the <header> belongs to Navigation
     vi.stubGlobal(
       "IntersectionObserver",
       class {
@@ -33,7 +33,7 @@ describe("Navigation", () => {
       },
     );
 
-    const { container, unmount } = render(<Navigation />);
+    const { container, unmount } = renderWithRouter(Navigation);
     const bar = container.querySelector("header > div");
     expect(bar).toHaveClass("border-transparent");
 

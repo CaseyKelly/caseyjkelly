@@ -21,18 +21,14 @@ export default defineConfig({
     { name: "desktop", use: { ...devices["Desktop Chrome"] } },
     { name: "mobile", use: { ...devices["Pixel 7"] } },
   ],
-  // e2e runs against a production build (`pnpm build` first) so it catches
-  // what a dependency update breaks in the real output, not just in dev
+  // e2e runs against the production build (`npm run build` first) so it
+  // catches what a dependency update breaks in the real output, not just in
+  // dev. `serve` is Vercel's static server: like Vercel it serves
+  // contact/index.html at /contact and 404.html for unknown paths
   webServer: {
-    command: `pnpm start -p ${PORT}`,
+    command: `npx serve build/client --listen ${PORT} --no-request-logging`,
     url: baseURL,
     reuseExistingServer: !process.env.CI,
     timeout: 60_000,
-    env: {
-      // /api/incr reads these at import; the e2e tests never reach Redis
-      UPSTASH_REDIS_REST_URL:
-        process.env.UPSTASH_REDIS_REST_URL ?? "http://127.0.0.1:1",
-      UPSTASH_REDIS_REST_TOKEN: process.env.UPSTASH_REDIS_REST_TOKEN ?? "e2e",
-    },
   },
 });

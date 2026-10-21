@@ -41,17 +41,50 @@ test.describe("whole site", () => {
     );
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       "content",
-      "https://caseyjkelly.com/favicon.png",
+      "https://www.caseyjkelly.com/favicon.png",
     );
+    // the only image is the square favicon, so the small card
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       "content",
-      "summary_large_image",
+      "summary",
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
       /index, follow/,
     );
     await expect(page.locator("html")).toHaveAttribute("lang", "en");
+  });
+
+  for (const path of pages) {
+    test(`${path} has exactly one canonical URL`, async ({ page }) => {
+      await page.goto(path);
+
+      const canonical = page.locator('link[rel="canonical"]');
+      await expect(canonical).toHaveCount(1);
+      await expect(canonical).toHaveAttribute(
+        "href",
+        `https://www.caseyjkelly.com${path}`,
+      );
+    });
+  }
+
+  test("lists every page in the sitemap", async ({ request }) => {
+    const response = await request.get("/sitemap.xml");
+
+    expect(response.status()).toBe(200);
+    const body = await response.text();
+    for (const path of pages) {
+      expect(body).toContain(`<loc>https://www.caseyjkelly.com${path}</loc>`);
+    }
+  });
+
+  test("points crawlers at the sitemap", async ({ request }) => {
+    const response = await request.get("/robots.txt");
+
+    expect(response.status()).toBe(200);
+    expect(await response.text()).toContain(
+      "Sitemap: https://www.caseyjkelly.com/sitemap.xml",
+    );
   });
 
   test("serves the favicon", async ({ request }) => {
@@ -62,27 +95,21 @@ test.describe("whole site", () => {
   });
 
   test("returns a 404 for unknown pages", async ({ page }) => {
-    const response = await page.goto("/does-not-exist");
+    const response = await page.goto("/does-not-exist/at/all");
 
     expect(response?.status()).toBe(404);
-    await expect(page.getByText("This page could not be found.")).toBeVisible();
-  });
-});
+    await expect(page).toHaveTitle("Page not found | caseyjkelly.com");
+    await expect(
+      page.getByRole("heading", { level: 1, name: "Page not found" }),
+    ).toBeVisible();
+    await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
+      "content",
+      "noindex",
+    );
 
-test.describe("/api/incr", () => {
-  test("only accepts POST", async ({ request }) => {
-    const response = await request.get("/api/incr");
-
-    expect(response.status()).toBe(405);
-    expect(await response.text()).toBe("use POST");
-  });
-
-  test("rejects non-JSON bodies", async ({ request }) => {
-    const response = await request.post("/api/incr", {
-      headers: { "Content-Type": "text/plain" },
-      data: "hello",
-    });
-
-    expect(response.status()).toBe(400);
+    // the page hydrates at any URL, so its links work client-side
+    await page.getByRole("link", { name: "Back to home" }).last().click();
+    await expect(page).toHaveURL("/");
+    await expect(page).toHaveTitle("Casey Kelly");
   });
 });

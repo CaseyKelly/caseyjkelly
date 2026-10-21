@@ -41,12 +41,13 @@ test.describe("homepage", () => {
     const family = await heading.evaluate(
       (el) => getComputedStyle(el).fontFamily,
     );
-    expect(family.toLowerCase()).toContain("calsans");
+    const normalize = (name: string) => name.toLowerCase().replace(/\s/g, "");
+    expect(normalize(family)).toContain("calsans");
     await page.evaluate(() => document.fonts.ready);
     const loaded = await page.evaluate(() =>
       Array.from(document.fonts).some(
         (font) =>
-          font.family.toLowerCase().includes("calsans") &&
+          font.family.toLowerCase().replace(/\s/g, "").includes("calsans") &&
           font.status === "loaded",
       ),
     );
@@ -98,6 +99,8 @@ test.describe("homepage", () => {
     await expect(
       page.getByRole("heading", { level: 1, name: "Projects" }),
     ).toBeVisible();
+    // a client-side navigation updates the route's meta tags too
+    await expect(page).toHaveTitle("Projects | caseyjkelly.com");
 
     await page.getByRole("link", { name: "Back to home" }).click();
     await expect(page).toHaveURL("/");
