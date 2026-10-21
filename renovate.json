@@ -1,9 +1,6 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended",
-    ":semanticCommitsDisabled"
-  ],
+  "extends": ["config:recommended", ":semanticCommitsDisabled"],
   "timezone": "America/New_York",
   "labels": ["dependencies"],
   "prHourlyLimit": 0,
@@ -23,12 +20,17 @@
       "groupName": "dev dependencies"
     },
     {
-      "matchPackageNames": ["react", "react-dom", "@types/react", "@types/react-dom"],
+      "matchPackageNames": [
+        "react",
+        "react-dom",
+        "@types/react",
+        "@types/react-dom"
+      ],
       "groupName": "react"
     },
     {
-      "matchPackageNames": ["next", "/^@next//"],
-      "groupName": "next.js"
+      "matchPackageNames": ["react-router", "/^@react-router//"],
+      "groupName": "react-router"
     }
   ]
 }

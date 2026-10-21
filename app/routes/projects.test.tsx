@@ -1,6 +1,7 @@
-import { render, screen, within } from "@testing-library/react";
+import { screen, within } from "@testing-library/react";
 import { describe, expect, it } from "vitest";
-import Projects, { metadata } from "./page";
+import { renderWithRouter } from "../test-utils";
+import Projects, { meta } from "./projects";
 
 function projectCard(name: string): HTMLElement {
   const heading = screen.getByRole("heading", { level: 2, name });
@@ -8,12 +9,36 @@ function projectCard(name: string): HTMLElement {
 }
 
 describe("Projects page", () => {
-  it("sets its page title", () => {
-    expect(metadata.title).toBe("Projects");
+  it("sets its page title and canonical URL", () => {
+    expect(meta()).toEqual(
+      expect.arrayContaining([
+        { title: "Projects | caseyjkelly.com" },
+        {
+          tagName: "link",
+          rel: "canonical",
+          href: "https://www.caseyjkelly.com/projects",
+        },
+      ]),
+    );
+  });
+
+  it("loads only the first screenshot eagerly", () => {
+    renderWithRouter(Projects);
+
+    const [first, second] = screen.getAllByRole("img", { hidden: true });
+    expect(first).toHaveAttribute("loading", "eager");
+    expect(first).toHaveAttribute("fetchpriority", "high");
+    expect(second).toHaveAttribute("loading", "lazy");
+    expect(second).not.toHaveAttribute("fetchpriority");
+    // a 640w variant for phones, the full 1280w image otherwise
+    expect(second).toHaveAttribute(
+      "srcset",
+      "/projects/kelso-kelly-640.webp 640w, /projects/kelso-kelly.webp 1280w",
+    );
   });
 
   it("lists every project", () => {
-    render(<Projects />);
+    renderWithRouter(Projects);
 
     expect(
       screen.getByRole("heading", { level: 1, name: "Projects" }),
@@ -41,7 +66,7 @@ describe("Projects page", () => {
   ])(
     "links %s to the live site and its source",
     (name, liveLabel, liveHref, sourceHref, imageAlt) => {
-      render(<Projects />);
+      renderWithRouter(Projects);
       const card = within(projectCard(name));
 
       const live = card.getByRole("link", { name: liveLabel });
@@ -63,7 +88,7 @@ describe("Projects page", () => {
   );
 
   it("shows FantasyPhish usage stats", () => {
-    render(<Projects />);
+    renderWithRouter(Projects);
     const card = within(projectCard("FantasyPhish"));
 
     for (const [value, label] of [
@@ -79,7 +104,7 @@ describe("Projects page", () => {
   });
 
   it("lists each project's stack", () => {
-    render(<Projects />);
+    renderWithRouter(Projects);
 
     const stack = within(
       within(projectCard("Kelso Kelly Music")).getByRole("list", {

@@ -1,9 +1,9 @@
-"use client";
 import { Github, Linkedin, Mail } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router";
 import { Navigation } from "../components/nav";
 import { Card } from "../components/card";
 import Sky from "../components/sky";
+import { seo } from "../lib/seo";
 
 const socials = [
   {
@@ -28,6 +28,13 @@ const socials = [
   },
 ];
 
+export const meta = () =>
+  seo({
+    title: "Contact | caseyjkelly.com",
+    path: "/contact",
+    description: "Get in touch with Casey Kelly by email, LinkedIn or GitHub.",
+  });
+
 export default function Contact() {
   return (
     <main className="relative isolate min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
@@ -41,7 +48,7 @@ export default function Contact() {
           {socials.map((s) => (
             <Card key={s.label}>
               <Link
-                href={s.href}
+                to={s.href}
                 target={s.target}
                 className="relative flex flex-col items-center gap-4 p-6 duration-700 rounded-xl group md:gap-8 md:px-10 md:pt-20 md:pb-24 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-indigo-300/70"
               >

@@ -1,15 +1,16 @@
-import Link from "next/link";
+import { Link } from "react-router";
 import React from "react";
-import Sky from "./components/sky";
+import Sky from "../components/sky";
+import { seo } from "../lib/seo";
 
 const navigation = [
-  { name: "Projects", href: "/projects" },
+  { name: "Projects", href: "/projects", prefetch: "render" as const },
   {
     name: "Resume",
     href: "/CaseyKellyResume.pdf",
     target: "_blank",
-    // a file, not a route: prefetching would download the whole PDF on load
-    prefetch: false,
+    // a file, not a route: load it with a normal browser request
+    reloadDocument: true,
   },
   { name: "Github", href: "https://github.com/CaseyKelly", target: "_blank" },
   {
@@ -17,7 +18,7 @@ const navigation = [
     href: "https://www.linkedin.com/in/caseyjkelly",
     target: "_blank",
   },
-  { name: "Contact", href: "/contact" },
+  { name: "Contact", href: "/contact", prefetch: "render" as const },
 ];
 
 const name = "casey kelly";
@@ -25,6 +26,8 @@ const letters = Array.from(name, (char, position) => ({
   char: char === " " ? "\u00A0" : char,
   delay: 150 + position * 55,
 }));
+
+export const meta = () => seo({ title: "Casey Kelly", path: "/" });
 
 export default function Home() {
   return (
@@ -40,8 +43,9 @@ export default function Home() {
           {navigation.map((item) => (
             <li key={item.href}>
               <Link
-                href={item.href}
+                to={item.href}
                 target={item.target}
+                reloadDocument={item.reloadDocument}
                 prefetch={item.prefetch}
                 className="block px-3 py-2 text-sm transition-colors duration-300 rounded-md text-zinc-400 hover:text-white focus-visible:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
               >

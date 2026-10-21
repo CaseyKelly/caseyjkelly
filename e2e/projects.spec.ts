@@ -6,12 +6,14 @@ const projects = [
     live: "https://www.fantasyphish.com",
     source: "https://github.com/CaseyKelly/fantasyphish",
     image: "FantasyPhish landing page with the song picker",
+    file: "fantasyphish",
   },
   {
     name: "Kelso Kelly Music",
     live: "https://www.kelsokellymusic.com",
     source: "https://github.com/CaseyKelly/kelso-kelly-site",
     image: "Kelso Kelly Music homepage",
+    file: "kelso-kelly",
   },
 ];
 
@@ -40,15 +42,18 @@ test.describe("projects page", () => {
       await expect(source).toHaveAttribute("target", "_blank");
     });
 
-    test(`loads the ${project.name} screenshot through next/image`, async ({
+    test(`loads the ${project.name} screenshot at the right size`, async ({
       page,
     }) => {
       await page.goto("/projects");
 
       const image = page.getByAltText(project.image);
+      await image.scrollIntoViewIfNeeded();
       await expect(image).toBeVisible();
-      // served by the image optimizer, not straight from /public
-      await expect(image).toHaveAttribute("src", /\/_next\/image\?url=/);
+      // one of the two srcset widths, picked for the screen's pixel density
+      await expect
+        .poll(() => image.evaluate((img: HTMLImageElement) => img.currentSrc))
+        .toMatch(new RegExp(`/projects/${project.file}(-640)?\\.webp$`));
       await expect
         .poll(() => image.evaluate((img: HTMLImageElement) => img.naturalWidth))
         .toBeGreaterThan(0);
@@ -68,4 +73,13 @@ test.describe("projects page", () => {
       "shows",
     ]);
   });
+});
+
+test("fetches only the first screenshot up front", async ({ page }) => {
+  await page.goto("/projects");
+
+  const images = page.locator("article img");
+  await expect(images.first()).toHaveAttribute("loading", "eager");
+  await expect(images.first()).toHaveAttribute("fetchpriority", "high");
+  await expect(images.nth(1)).toHaveAttribute("loading", "lazy");
 });

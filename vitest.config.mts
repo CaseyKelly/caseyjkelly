@@ -1,29 +1,25 @@
 import { fileURLToPath } from "node:url";
-import react from "@vitejs/plugin-react";
 import { defineConfig } from "vitest/config";
 
+// deliberately not vite.config.ts: the React Router plugin builds the whole
+// app and doesn't belong in unit tests
 export default defineConfig({
-  plugins: [react()],
+  esbuild: { jsx: "automatic" },
   resolve: {
     alias: {
-      "@": fileURLToPath(new URL(".", import.meta.url)),
+      "@": fileURLToPath(new URL("./app", import.meta.url)),
     },
   },
   test: {
     environment: "jsdom",
     setupFiles: ["./vitest.setup.ts"],
-    include: ["**/*.test.{ts,tsx}"],
-    exclude: ["node_modules", ".next", "e2e"],
+    include: ["app/**/*.test.{ts,tsx}"],
     restoreMocks: true,
     unstubEnvs: true,
     coverage: {
       provider: "v8",
-      include: [
-        "app/**/*.{ts,tsx}",
-        "pages/**/*.{ts,tsx}",
-        "mdx-components.tsx",
-      ],
-      exclude: ["**/*.test.{ts,tsx}", "app/layout.tsx"],
+      include: ["app/**/*.{ts,tsx}"],
+      exclude: ["**/*.test.{ts,tsx}", "app/test-utils.tsx", "app/routes.ts"],
       reporter: ["text", "html", "lcov"],
     },
   },
