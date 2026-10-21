@@ -14,7 +14,7 @@ npm run build
 npm run test:e2e       # runs against build/, so build first
 ```
 
-Node 22 (`engines` in `package.json`). Install with `npm ci`; never hand-edit `package-lock.json`, regenerate it with `npm install`.
+Node 24 (`engines` in `package.json`). Install with `npm ci`; never hand-edit `package-lock.json`, regenerate it with `npm install`.
 
 For e2e in a sandbox with a preinstalled Chromium, set `PLAYWRIGHT_CHROMIUM_EXECUTABLE` to its path instead of running `npx playwright install`.
 
