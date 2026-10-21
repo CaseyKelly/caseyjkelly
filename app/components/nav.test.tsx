@@ -38,7 +38,7 @@ describe("Navigation", () => {
     expect(bar).toHaveClass("border-transparent");
 
     act(() => report([{ isIntersecting: false }]));
-    expect(bar).toHaveClass("backdrop-blur");
+    expect(bar).toHaveClass("backdrop-blur-sm");
     expect(bar).not.toHaveClass("border-transparent");
 
     act(() => report([{ isIntersecting: true }]));

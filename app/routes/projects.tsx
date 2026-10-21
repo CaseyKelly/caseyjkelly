@@ -69,10 +69,10 @@ const projects = [
 
 export default function Projects() {
   return (
-    <main className="relative isolate min-h-[100dvh] overflow-hidden bg-gradient-to-tl from-black via-zinc-600/20 to-black">
+    <main className="relative isolate min-h-dvh overflow-hidden bg-linear-to-tl from-black via-zinc-600/20 to-black">
       <Sky className="opacity-70" />
       <Navigation />
-      <div className="container flex flex-col items-center justify-center min-h-[100dvh] px-4 py-20 mx-auto">
+      <div className="container flex flex-col items-center justify-center min-h-dvh px-4 py-20 mx-auto">
         <h1 className="mb-10 text-3xl text-center text-white opacity-0 font-display sm:text-4xl md:mb-14 animate-fade-up motion-reduce:animate-none motion-reduce:opacity-100">
           Projects
         </h1>
@@ -146,7 +146,7 @@ export default function Projects() {
                       <Link
                         to={project.href}
                         target="_blank"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md hover:bg-indigo-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                       >
                         {project.hrefLabel}
                         <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
@@ -154,7 +154,7 @@ export default function Projects() {
                       <Link
                         to={project.source}
                         target="_blank"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors border rounded-md text-zinc-200 border-zinc-600 hover:border-zinc-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
+                        className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors border rounded-md text-zinc-200 border-zinc-600 hover:border-zinc-300 hover:text-white focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70"
                       >
                         <Github className="w-4 h-4" aria-hidden="true" />
                         View source
