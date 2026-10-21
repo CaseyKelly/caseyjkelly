@@ -1,6 +1,5 @@
-"use client";
 import { ArrowLeft } from "lucide-react";
-import Link from "next/link";
+import { Link } from "react-router";
 import React, { useEffect, useRef, useState } from "react";
 
 export const Navigation: React.FC = () => {
@@ -28,7 +27,7 @@ export const Navigation: React.FC = () => {
       >
         <div className="container flex flex-row items-center p-6 mx-auto">
           <Link
-            href="/"
+            to="/"
             aria-label="Back to home"
             className="p-1 -m-1 duration-200 rounded-md text-zinc-300 hover:text-zinc-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
           >

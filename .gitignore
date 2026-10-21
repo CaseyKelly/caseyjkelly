@@ -39,6 +39,10 @@ next-env.d.ts
 .contentlayer
 .vscode
 
+# react-router
+/build
+/.react-router
+
 # playwright
 /test-results/
 /playwright-report/

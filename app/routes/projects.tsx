@@ -1,15 +1,16 @@
 import { ArrowUpRight, Github } from "lucide-react";
-import { Metadata } from "next";
-import Image from "next/image";
-import Link from "next/link";
+import { Link } from "react-router";
 import { Card } from "../components/card";
 import { Navigation } from "../components/nav";
 import Sky from "../components/sky";
+import { seo } from "../lib/seo";
 
-export const metadata: Metadata = {
-  title: "Projects",
-  description: "Things Casey Kelly has built.",
-};
+export const meta = () =>
+  seo({
+    title: "Projects | caseyjkelly.com",
+    path: "/projects",
+    description: "Things Casey Kelly has built.",
+  });
 
 const projects = [
   {
@@ -75,24 +76,28 @@ export default function Projects() {
           Projects
         </h1>
         <ul className="grid w-full max-w-5xl gap-8">
-          {projects.map((project) => (
+          {projects.map((project, index) => (
             <li key={project.name}>
               <Card>
                 <article className="relative z-20 grid gap-6 p-4 md:grid-cols-[1.15fr_1fr] md:gap-10 md:p-8">
                   <Link
-                    href={project.href}
+                    to={project.href}
                     target="_blank"
                     tabIndex={-1}
                     aria-hidden="true"
                     className="block self-center overflow-hidden border rounded-lg border-zinc-700/80"
                   >
-                    <Image
+                    <img
                       src={project.image}
+                      srcSet={`${project.image.replace(".webp", "-640.webp")} 640w, ${project.image} 1280w`}
                       alt={project.imageAlt}
                       width={1280}
                       height={800}
                       sizes="(min-width: 768px) 560px, 100vw"
-                      priority
+                      // only the first card is above the fold on a phone
+                      fetchPriority={index === 0 ? "high" : undefined}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      decoding="async"
                       className="w-full h-auto transition-transform duration-700 group-hover:scale-[1.02]"
                     />
                   </Link>
@@ -138,7 +143,7 @@ export default function Projects() {
                     </ul>
                     <div className="flex flex-wrap gap-3 mt-6">
                       <Link
-                        href={project.href}
+                        to={project.href}
                         target="_blank"
                         className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md hover:bg-indigo-100 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
                       >
@@ -146,7 +151,7 @@ export default function Projects() {
                         <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
                       </Link>
                       <Link
-                        href={project.source}
+                        to={project.source}
                         target="_blank"
                         className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium transition-colors border rounded-md text-zinc-200 border-zinc-600 hover:border-zinc-300 hover:text-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-300/70"
                       >
