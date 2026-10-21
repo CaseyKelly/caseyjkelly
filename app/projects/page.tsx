@@ -41,6 +41,28 @@ const projects = [
     hrefLabel: "Play at fantasyphish.com",
     source: "https://github.com/CaseyKelly/fantasyphish",
   },
+  {
+    name: "Kelso Kelly Music",
+    tagline: "A musician's website that runs itself",
+    description:
+      "A production site for a Northern Colorado musician that uses Google Workspace as the CMS. He adds a gig to Google Calendar or drops photos and videos into Drive, and push-notification webhooks sync it to the site within seconds: photos (even iPhone HEIC files) are converted to WebP and served from a CDN, and raw videos are uploaded to YouTube by a GitHub Actions job.",
+    image: "/projects/kelso-kelly.webp",
+    imageAlt: "Kelso Kelly Music homepage",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Tailwind CSS",
+      "Neon Postgres",
+      "Google APIs",
+      "Vercel Blob",
+      "GitHub Actions",
+      "Vitest",
+      "Playwright",
+    ],
+    href: "https://www.kelsokellymusic.com",
+    hrefLabel: "Visit kelsokellymusic.com",
+    source: "https://github.com/CaseyKelly/kelso-kelly-site",
+  },
 ];
 
 export default function Projects() {
@@ -83,18 +105,23 @@ export default function Projects() {
                     <p className="mt-4 text-sm leading-relaxed text-zinc-400">
                       {project.description}
                     </p>
-                    <dl className="grid grid-cols-4 gap-2 py-4 mt-5 border-y border-zinc-800">
-                      {project.stats.map((stat) => (
-                        <div key={stat.label} className="flex flex-col-reverse">
-                          <dt className="text-xs text-zinc-500">
-                            {stat.label}
-                          </dt>
-                          <dd className="text-xl text-white font-display md:text-2xl">
-                            {stat.value}
-                          </dd>
-                        </div>
-                      ))}
-                    </dl>
+                    {project.stats && (
+                      <dl className="grid grid-cols-4 gap-2 py-4 mt-5 border-y border-zinc-800">
+                        {project.stats.map((stat) => (
+                          <div
+                            key={stat.label}
+                            className="flex flex-col-reverse"
+                          >
+                            <dt className="text-xs text-zinc-500">
+                              {stat.label}
+                            </dt>
+                            <dd className="text-xl text-white font-display md:text-2xl">
+                              {stat.value}
+                            </dd>
+                          </div>
+                        ))}
+                      </dl>
+                    )}
                     <ul
                       aria-label="Built with"
                       className="flex flex-wrap gap-1.5 mt-5"
