@@ -5,6 +5,7 @@
   "labels": ["dependencies"],
   "prHourlyLimit": 0,
   "prConcurrentLimit": 0,
+  "rebaseWhen": "behind-base-branch",
   "minimumReleaseAge": "1 day",
   "lockFileMaintenance": {
     "enabled": true
