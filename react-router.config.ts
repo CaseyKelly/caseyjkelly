@@ -6,14 +6,6 @@ import type { Config } from "@react-router/dev/config";
 export default {
   ssr: false,
   prerender: ["/", "/contact", "/projects", "/404"],
-  // opt in to v8 behavior now so the major upgrade is a version bump
-  future: {
-    v8_middleware: true,
-    v8_splitRouteModules: true,
-    v8_viteEnvironmentApi: true,
-    v8_passThroughRequests: true,
-    v8_trailingSlashAwareDataRequests: true,
-  },
   // Vercel serves build/client/404.html for unknown paths, so move the
   // prerendered not-found page there instead of leaving it at /404/
   async buildEnd({ reactRouterConfig }) {
