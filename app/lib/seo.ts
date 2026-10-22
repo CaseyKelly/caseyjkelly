@@ -34,8 +34,14 @@ export function seo({
     { property: "og:site_name", content: "caseyjkelly.com" },
     { property: "og:type", content: "website" },
     { property: "og:locale", content: "en_US" },
-    { property: "og:image", content: `${SITE_URL}/favicon.png` },
-    { name: "twitter:card", content: "summary" },
+    { property: "og:image", content: `${SITE_URL}/og-image.png` },
+    { property: "og:image:width", content: "1200" },
+    { property: "og:image:height", content: "630" },
+    {
+      property: "og:image:alt",
+      content: "Casey Kelly, Senior Software Engineer in Denver, CO",
+    },
+    { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:site", content: "@Caseyk819" },
   ];
 }

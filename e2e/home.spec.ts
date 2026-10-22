@@ -4,7 +4,9 @@ test.describe("homepage", () => {
   test("renders the name, intro and primary navigation", async ({ page }) => {
     await page.goto("/");
 
-    await expect(page).toHaveTitle("Casey Kelly");
+    await expect(page).toHaveTitle(
+      "Casey Kelly | Senior Software Engineer in Denver",
+    );
     await expect(
       page.getByRole("heading", { level: 1, name: "casey kelly" }),
     ).toBeVisible();

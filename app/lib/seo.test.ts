@@ -45,6 +45,27 @@ describe("seo", () => {
     });
   });
 
+  it("shares a large preview image with its dimensions", () => {
+    const tags = seo({ title: "x", path: "/" });
+
+    expect(tags).toContainEqual({
+      property: "og:image",
+      content: `${SITE_URL}/og-image.png`,
+    });
+    expect(tags).toContainEqual({
+      property: "og:image:width",
+      content: "1200",
+    });
+    expect(tags).toContainEqual({
+      property: "og:image:height",
+      content: "630",
+    });
+    expect(tags).toContainEqual({
+      name: "twitter:card",
+      content: "summary_large_image",
+    });
+  });
+
   it("lets search engines index the page", () => {
     expect(seo({ title: "x", path: "/" })).toContainEqual({
       name: "robots",
