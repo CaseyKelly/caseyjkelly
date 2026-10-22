@@ -28,6 +28,6 @@ For e2e in a sandbox with a preinstalled Chromium, set `PLAYWRIGHT_CHROMIUM_EXEC
 
 ## Conventions
 
-- Match the surrounding code: function components, Tailwind utility classes, `lucide-react` for icons, `framer-motion` for animation.
+- Match the surrounding code: function components, Tailwind utility classes, `lucide-react` for icons, `motion` (import from `motion/react`) for animation.
 - Static assets go in `public/`. Project images ship as `.webp` with a `-640` variant for small screens.
 - Dependency updates come from Renovate (`renovate.json`); don't bump versions by hand unless that's the task.
