@@ -91,6 +91,17 @@ test.describe("homepage", () => {
     await expect(page.locator("h1 span").first()).toHaveCSS("opacity", "1");
   });
 
+  test("reveals the page and cycles the tagline", async ({ page }) => {
+    await page.goto("/");
+
+    await expect(page.getByRole("link", { name: "Contact" })).toBeVisible();
+    await expect(page.locator("[data-intro]")).toHaveCSS("opacity", "1");
+    const specialty = page.locator("[data-specialty]");
+    await expect(specialty).toHaveText("accessible interfaces");
+    // the next specialty decodes in a few seconds after the intro
+    await expect(specialty).toHaveText("design systems", { timeout: 10_000 });
+  });
+
   test("navigates to Projects and back", async ({ page }) => {
     await page.goto("/");
 

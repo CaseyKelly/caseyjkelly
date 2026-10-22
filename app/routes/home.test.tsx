@@ -58,4 +58,11 @@ describe("Home page", () => {
       screen.getByText(/Senior software engineer in Denver, CO/),
     ).toBeInTheDocument();
   });
+
+  it("keeps the animated tagline out of the accessibility tree", () => {
+    renderWithRouter(Home);
+
+    const tagline = screen.getByText("accessible interfaces").closest("p");
+    expect(tagline).toHaveAttribute("aria-hidden", "true");
+  });
 });

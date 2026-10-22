@@ -15,9 +15,11 @@
   },
   "dependencies": {
     "@fontsource/inter": "^5.0.18",
+    "@gsap/react": "^2.1.2",
     "@react-router/node": "^8.0.0",
     "@vercel/analytics": "^2.0.1",
     "motion": "^14.0.0",
+    "gsap": "^3.15.0",
     "isbot": "^5.2.2",
     "lucide-react": "^1.0.0",
     "react": "^19.0.0",
