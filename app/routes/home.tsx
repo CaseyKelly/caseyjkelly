@@ -324,8 +324,7 @@ export default function Home() {
       <div data-intro className="px-6 my-16 text-center intro-hidden">
         <p className="max-w-xl mx-auto text-sm leading-relaxed text-zinc-400">
           Senior software engineer in Denver, CO. 10+ years building accessible
-          React and TypeScript products, most recently in healthcare payments at
-          Paytient.
+          web products at startups in healthcare, home lending, and streaming.
         </p>
       </div>
     </main>

@@ -4,7 +4,7 @@ import type { MetaDescriptor } from "react-router";
 export const SITE_URL = "https://www.caseyjkelly.com";
 
 const DEFAULT_DESCRIPTION =
-  "Senior software engineer in Denver, CO building accessible React and TypeScript products.";
+  "Senior software engineer in Denver, CO building accessible web products.";
 
 interface SeoOptions {
   title: string;
