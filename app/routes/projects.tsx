@@ -10,7 +10,8 @@ export const meta = () =>
   seo({
     title: "Projects | caseyjkelly.com",
     path: "/projects",
-    description: "Things Casey Kelly has built.",
+    description:
+      "Projects by Casey Kelly: FantasyPhish, a fantasy game for Phish tours, and Kelso Kelly Music, a musician's site that syncs from Google Calendar and Drive.",
   });
 
 const projects = [

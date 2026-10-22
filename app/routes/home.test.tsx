@@ -41,7 +41,7 @@ describe("Home page", () => {
   it("is titled with Casey's name and canonical at the site root", () => {
     expect(meta()).toEqual(
       expect.arrayContaining([
-        { title: "Casey Kelly" },
+        { title: "Casey Kelly | Senior Software Engineer in Denver" },
         {
           tagName: "link",
           rel: "canonical",

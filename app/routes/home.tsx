@@ -4,7 +4,7 @@ import gsap from "gsap";
 import { ScrambleTextPlugin } from "gsap/ScrambleTextPlugin";
 import { useGSAP } from "@gsap/react";
 import Sky from "../components/sky";
-import { seo } from "../lib/seo";
+import { SITE_URL, seo } from "../lib/seo";
 
 gsap.registerPlugin(useGSAP, ScrambleTextPlugin);
 
@@ -50,7 +50,32 @@ const MAX_LIFT = 18;
 // share of the cursor's offset that a nav link follows
 const MAGNET_STRENGTH = 0.35;
 
-export const meta = () => seo({ title: "Casey Kelly", path: "/" });
+// Person data so search engines can tie the site to Casey's other profiles
+const person = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: "Casey Kelly",
+  url: SITE_URL,
+  jobTitle: "Senior Software Engineer",
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Denver",
+    addressRegion: "CO",
+    addressCountry: "US",
+  },
+  sameAs: [
+    "https://github.com/CaseyKelly",
+    "https://www.linkedin.com/in/caseyjkelly",
+  ],
+};
+
+export const meta = () => [
+  ...seo({
+    title: "Casey Kelly | Senior Software Engineer in Denver",
+    path: "/",
+  }),
+  { "script:ld+json": person },
+];
 
 export default function Home() {
   const scope = useRef<HTMLElement>(null);

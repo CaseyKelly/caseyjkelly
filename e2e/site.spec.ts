@@ -37,16 +37,15 @@ test.describe("whole site", () => {
     );
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       "content",
-      "Casey Kelly",
+      "Casey Kelly | Senior Software Engineer in Denver",
     );
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       "content",
-      "https://www.caseyjkelly.com/favicon.png",
+      "https://www.caseyjkelly.com/og-image.png",
     );
-    // the only image is the square favicon, so the small card
     await expect(page.locator('meta[name="twitter:card"]')).toHaveAttribute(
       "content",
-      "summary",
+      "summary_large_image",
     );
     await expect(page.locator('meta[name="robots"]')).toHaveAttribute(
       "content",
@@ -94,6 +93,27 @@ test.describe("whole site", () => {
     expect(response.headers()["content-type"]).toContain("image/png");
   });
 
+  test("serves the social preview image", async ({ request }) => {
+    const response = await request.get("/og-image.png");
+
+    expect(response.status()).toBe(200);
+    expect(response.headers()["content-type"]).toContain("image/png");
+  });
+
+  test("describes Casey as a Person for search engines", async ({ page }) => {
+    await page.goto("/");
+
+    const json = await page
+      .locator('script[type="application/ld+json"]')
+      .textContent();
+    expect(JSON.parse(json ?? "")).toMatchObject({
+      "@type": "Person",
+      name: "Casey Kelly",
+      url: "https://www.caseyjkelly.com",
+      sameAs: expect.arrayContaining(["https://github.com/CaseyKelly"]),
+    });
+  });
+
   test("returns a 404 for unknown pages", async ({ page }) => {
     const response = await page.goto("/does-not-exist/at/all");
 
@@ -110,6 +130,8 @@ test.describe("whole site", () => {
     // the page hydrates at any URL, so its links work client-side
     await page.getByRole("link", { name: "Back to home" }).last().click();
     await expect(page).toHaveURL("/");
-    await expect(page).toHaveTitle("Casey Kelly");
+    await expect(page).toHaveTitle(
+      "Casey Kelly | Senior Software Engineer in Denver",
+    );
   });
 });
