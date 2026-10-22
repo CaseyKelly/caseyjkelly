@@ -232,6 +232,10 @@ export default function Home() {
             magnets.forEach(({ link, onMove, onLeave }) => {
               link.removeEventListener("pointermove", onMove);
               link.removeEventListener("pointerleave", onLeave);
+              // tweens started by the handlers aren't tracked by this context,
+              // so stop them and put the link back ourselves
+              gsap.killTweensOf(link);
+              gsap.set(link, { clearProps: "transform" });
             });
           };
         },
