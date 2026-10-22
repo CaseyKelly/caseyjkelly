@@ -17,7 +17,7 @@
     "@fontsource/inter": "^5.0.18",
     "@react-router/node": "^8.0.0",
     "@vercel/analytics": "^2.0.1",
-    "framer-motion": "^14.0.0",
+    "motion": "^14.0.0",
     "isbot": "^5.2.2",
     "lucide-react": "^1.0.0",
     "react": "^19.0.0",
