@@ -32,11 +32,11 @@ const letters = Array.from(name, (char) => (char === " " ? " " : char));
 // cycled through by the terminal-style tagline under the name
 const specialties = [
   "accessible interfaces",
-  "Kotlin + Java APIs",
+  "reliable backend services",
   "design systems",
-  "Stripe payment flows",
-  "React + TypeScript apps",
-  "AWS infra with Terraform",
+  "secure payment flows",
+  "features end to end",
+  "cloud infrastructure as code",
   "delightful micro-interactions",
   "fast, resilient frontends",
 ];

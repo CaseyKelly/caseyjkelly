@@ -99,7 +99,7 @@ test.describe("homepage", () => {
     const specialty = page.locator("[data-specialty]");
     await expect(specialty).toHaveText("accessible interfaces");
     // the next specialty decodes in a few seconds after the intro
-    await expect(specialty).toHaveText("Kotlin + Java APIs", {
+    await expect(specialty).toHaveText("reliable backend services", {
       timeout: 10_000,
     });
   });
