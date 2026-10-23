@@ -39,7 +39,7 @@ export function seo({
     { property: "og:image:height", content: "630" },
     {
       property: "og:image:alt",
-      content: "Casey Kelly, Senior Software Engineer in Denver, CO",
+      content: "Casey Kelly-Ajbani, Senior Software Engineer in Denver, CO",
     },
     { name: "twitter:card", content: "summary_large_image" },
     { name: "twitter:site", content: "@Caseyk819" },

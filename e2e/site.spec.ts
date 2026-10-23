@@ -37,7 +37,7 @@ test.describe("whole site", () => {
     );
     await expect(page.locator('meta[property="og:title"]')).toHaveAttribute(
       "content",
-      "Casey Kelly | Senior Software Engineer in Denver",
+      "Casey Kelly-Ajbani | Senior Software Engineer in Denver",
     );
     await expect(page.locator('meta[property="og:image"]')).toHaveAttribute(
       "content",
@@ -108,7 +108,8 @@ test.describe("whole site", () => {
       .textContent();
     expect(JSON.parse(json ?? "")).toMatchObject({
       "@type": "Person",
-      name: "Casey Kelly",
+      name: "Casey Kelly-Ajbani",
+      alternateName: "Casey Kelly",
       url: "https://www.caseyjkelly.com",
       sameAs: expect.arrayContaining(["https://github.com/CaseyKelly"]),
     });
@@ -131,7 +132,7 @@ test.describe("whole site", () => {
     await page.getByRole("link", { name: "Back to home" }).last().click();
     await expect(page).toHaveURL("/");
     await expect(page).toHaveTitle(
-      "Casey Kelly | Senior Software Engineer in Denver",
+      "Casey Kelly-Ajbani | Senior Software Engineer in Denver",
     );
   });
 });

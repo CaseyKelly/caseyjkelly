@@ -33,7 +33,8 @@ export const meta = () =>
   seo({
     title: "Contact | caseyjkelly.com",
     path: "/contact",
-    description: "Get in touch with Casey Kelly by email, LinkedIn or GitHub.",
+    description:
+      "Get in touch with Casey Kelly-Ajbani by email, LinkedIn or GitHub.",
   });
 
 export default function Contact() {

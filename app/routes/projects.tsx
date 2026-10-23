@@ -11,7 +11,7 @@ export const meta = () =>
     title: "Projects | caseyjkelly.com",
     path: "/projects",
     description:
-      "Projects by Casey Kelly: FantasyPhish, a fantasy game for Phish tours, and Kelso Kelly Music, a musician's site that syncs from Google Calendar and Drive.",
+      "Projects by Casey Kelly-Ajbani: FantasyPhish, a fantasy game for Phish tours, and Kelso Kelly Music, a musician's site that syncs from Google Calendar and Drive.",
   });
 
 const projects = [

@@ -8,13 +8,13 @@ describe("Home page", () => {
     renderWithRouter(Home);
 
     expect(
-      screen.getByRole("heading", { level: 1, name: "casey kelly" }),
+      screen.getByRole("heading", { level: 1, name: "casey kelly-ajbani" }),
     ).toBeInTheDocument();
   });
 
   it.each([
     ["Projects", "/projects", null],
-    ["Resume", "/CaseyKellyResume.pdf", "_blank"],
+    ["Resume", "/CaseyKellyAjbaniResume.pdf", "_blank"],
     ["Github", "https://github.com/CaseyKelly", "_blank"],
     ["LinkedIn", "https://www.linkedin.com/in/caseyjkelly", "_blank"],
     ["Contact", "/contact", null],
@@ -41,7 +41,7 @@ describe("Home page", () => {
   it("is titled with Casey's name and canonical at the site root", () => {
     expect(meta()).toEqual(
       expect.arrayContaining([
-        { title: "Casey Kelly | Senior Software Engineer in Denver" },
+        { title: "Casey Kelly-Ajbani | Senior Software Engineer in Denver" },
         {
           tagName: "link",
           rel: "canonical",

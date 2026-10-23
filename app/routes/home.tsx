@@ -12,7 +12,7 @@ const navigation = [
   { name: "Projects", href: "/projects", prefetch: "render" as const },
   {
     name: "Resume",
-    href: "/CaseyKellyResume.pdf",
+    href: "/CaseyKellyAjbaniResume.pdf",
     target: "_blank",
     // a file, not a route: load it with a normal browser request
     reloadDocument: true,
@@ -26,7 +26,7 @@ const navigation = [
   { name: "Contact", href: "/contact", prefetch: "render" as const },
 ];
 
-const name = "casey kelly";
+const name = "casey kelly-ajbani";
 const letters = Array.from(name, (char) => (char === " " ? " " : char));
 
 // cycled through by the terminal-style tagline under the name
@@ -54,7 +54,9 @@ const MAGNET_STRENGTH = 0.35;
 const person = {
   "@context": "https://schema.org",
   "@type": "Person",
-  name: "Casey Kelly",
+  name: "Casey Kelly-Ajbani",
+  // so searches for the name Casey worked under before still find the site
+  alternateName: "Casey Kelly",
   url: SITE_URL,
   jobTitle: "Senior Software Engineer",
   address: {
@@ -71,7 +73,7 @@ const person = {
 
 export const meta = () => [
   ...seo({
-    title: "Casey Kelly | Senior Software Engineer in Denver",
+    title: "Casey Kelly-Ajbani | Senior Software Engineer in Denver",
     path: "/",
   }),
   { "script:ld+json": person },
@@ -305,7 +307,7 @@ export default function Home() {
       <div className="relative z-10 py-4 perspective-[900px] drop-shadow-[0_0_40px_rgba(165,180,252,0.35)]">
         <h1
           aria-label={name}
-          className="relative transform-3d [font-kerning:none] text-4xl text-white cursor-default font-display sm:text-6xl md:text-9xl whitespace-nowrap"
+          className="relative transform-3d [font-kerning:none] text-4xl text-white cursor-default font-display sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl whitespace-nowrap"
         >
           {letters.map((char, position) => (
             <span

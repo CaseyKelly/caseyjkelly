@@ -5,10 +5,10 @@ test.describe("homepage", () => {
     await page.goto("/");
 
     await expect(page).toHaveTitle(
-      "Casey Kelly | Senior Software Engineer in Denver",
+      "Casey Kelly-Ajbani | Senior Software Engineer in Denver",
     );
     await expect(
-      page.getByRole("heading", { level: 1, name: "casey kelly" }),
+      page.getByRole("heading", { level: 1, name: "casey kelly-ajbani" }),
     ).toBeVisible();
     await expect(
       page.getByText(/Senior software engineer in Denver, CO/),
@@ -24,7 +24,7 @@ test.describe("homepage", () => {
     ]);
     await expect(nav.getByRole("link", { name: "Resume" })).toHaveAttribute(
       "href",
-      "/CaseyKellyResume.pdf",
+      "/CaseyKellyAjbaniResume.pdf",
     );
     await expect(nav.getByRole("link", { name: "Github" })).toHaveAttribute(
       "href",
@@ -139,7 +139,7 @@ test.describe("homepage", () => {
       "target",
       "_blank",
     );
-    const response = await page.request.get("/CaseyKellyResume.pdf");
+    const response = await page.request.get("/CaseyKellyAjbaniResume.pdf");
     expect(response.status()).toBe(200);
     expect(response.headers()["content-type"]).toContain("application/pdf");
     const body = await response.body();
