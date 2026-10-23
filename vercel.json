@@ -5,6 +5,13 @@
   "buildCommand": "npm run build",
   "outputDirectory": "build/client",
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/CaseyKellyResume.pdf",
+      "destination": "/CaseyKellyAjbaniResume.pdf",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",

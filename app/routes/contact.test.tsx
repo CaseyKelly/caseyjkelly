@@ -23,7 +23,7 @@ describe("Contact page", () => {
         {
           name: "description",
           content:
-            "Get in touch with Casey Kelly by email, LinkedIn or GitHub.",
+            "Get in touch with Casey Kelly-Ajbani by email, LinkedIn or GitHub.",
         },
       ]),
     );

@@ -21,7 +21,7 @@ describe("seo", () => {
   });
 
   it("falls back to the site description", () => {
-    const tags = seo({ title: "Casey Kelly", path: "/" });
+    const tags = seo({ title: "Casey Kelly-Ajbani", path: "/" });
 
     expect(tags).toContainEqual({
       name: "description",
