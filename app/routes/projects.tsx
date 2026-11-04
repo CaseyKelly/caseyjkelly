@@ -65,7 +65,7 @@ const projects: Project[] = [
     tagline: "Accessibility fixes in a pull request you approve",
     status: "Currently building",
     description:
-      "An AI agent that finds accessibility bugs and fixes them. Point it at a URL and it scans the page against WCAG 2.1 AA, explains each issue in plain language, finds the React component in your repo that causes it, and drafts a minimal fix. Nothing changes until a person approves the diff; then it opens a pull request and re-scans the preview deploy. Prompt changes have to beat an eval suite, not just a demo. I'm building it now with Upasana Kelly-Ajbani.",
+      "An AI agent that finds accessibility bugs and fixes them. Point it at a URL and it scans the page against WCAG 2.1 AA, explains each issue in plain language, finds the React component in your repo that causes it, and drafts a minimal fix. Nothing changes until a person approves the diff; then it opens a pull request and re-scans the preview deploy. Prompt changes have to beat an eval suite, not just a demo.",
     image: "/projects/curbcut.webp",
     imageAlt: "Curbcut banner over a concept mockup of a scan in the terminal",
     stack: [
