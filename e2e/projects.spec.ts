@@ -15,6 +15,20 @@ const projects = [
     image: "Kelso Kelly Music homepage",
     file: "kelso-kelly",
   },
+  {
+    name: "Curbcut",
+    live: null,
+    source: "https://github.com/CaseyKelly/Curbcut",
+    image: "Curbcut banner over a concept mockup of a scan in the terminal",
+    file: "curbcut",
+  },
+  {
+    name: "caseyjkelly.com",
+    live: null,
+    source: "https://github.com/CaseyKelly/caseyjkelly",
+    image: "caseyjkelly.com home page: the name over a constellation",
+    file: "caseyjkelly",
+  },
 ];
 
 test.describe("projects page", () => {
@@ -34,8 +48,12 @@ test.describe("projects page", () => {
       await expect(card).toBeVisible();
 
       const live = card.getByRole("link", { name: /^(Play at|Visit) / });
-      await expect(live).toHaveAttribute("href", project.live);
-      await expect(live).toHaveAttribute("target", "_blank");
+      if (project.live) {
+        await expect(live).toHaveAttribute("href", project.live);
+        await expect(live).toHaveAttribute("target", "_blank");
+      } else {
+        await expect(live).toHaveCount(0);
+      }
 
       const source = card.getByRole("link", { name: "View source" });
       await expect(source).toHaveAttribute("href", project.source);
