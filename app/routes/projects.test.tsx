@@ -33,7 +33,7 @@ describe("Projects page", () => {
     // a 640w variant for phones, the full 1280w image otherwise
     expect(second).toHaveAttribute(
       "srcset",
-      "/projects/kelso-kelly-640.webp 640w, /projects/kelso-kelly.webp 1280w",
+      "/projects/curbcut-640.webp 640w, /projects/curbcut.webp 1280w",
     );
   });
 
@@ -45,7 +45,12 @@ describe("Projects page", () => {
     ).toBeInTheDocument();
     expect(
       screen.getAllByRole("heading", { level: 2 }).map((h) => h.textContent),
-    ).toEqual(["FantasyPhish", "Kelso Kelly Music"]);
+    ).toEqual([
+      "FantasyPhish",
+      "Curbcut",
+      "Kelso Kelly Music",
+      "caseyjkelly.com",
+    ]);
   });
 
   it.each([
@@ -86,6 +91,44 @@ describe("Projects page", () => {
       expect(imageLink).toHaveAttribute("tabindex", "-1");
     },
   );
+
+  it.each([
+    [
+      "Curbcut",
+      "https://github.com/CaseyKelly/Curbcut",
+      "Curbcut banner over a concept mockup of a scan in the terminal",
+    ],
+    [
+      "caseyjkelly.com",
+      "https://github.com/CaseyKelly/caseyjkelly",
+      "caseyjkelly.com home page: the name over a constellation",
+    ],
+  ])(
+    "links %s, which has no separate live site, only to its source",
+    (name, sourceHref, imageAlt) => {
+      renderWithRouter(Projects);
+      const card = within(projectCard(name));
+
+      const links = card.getAllByRole("link");
+      expect(links).toHaveLength(1);
+      expect(links[0]).toHaveAccessibleName("View source");
+      expect(links[0]).toHaveAttribute("href", sourceHref);
+      expect(links[0]).toHaveAttribute("target", "_blank");
+
+      const imageLink = card.getByAltText(imageAlt).closest("a");
+      expect(imageLink).toHaveAttribute("href", sourceHref);
+      expect(imageLink).toHaveAttribute("aria-hidden", "true");
+    },
+  );
+
+  it("marks only Curbcut as in progress", () => {
+    renderWithRouter(Projects);
+
+    expect(
+      within(projectCard("Curbcut")).getByText("Currently building"),
+    ).toBeInTheDocument();
+    expect(screen.getAllByText("Currently building")).toHaveLength(1);
+  });
 
   it("shows FantasyPhish usage stats", () => {
     renderWithRouter(Projects);

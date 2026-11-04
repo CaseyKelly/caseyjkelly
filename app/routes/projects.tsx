@@ -11,10 +11,26 @@ export const meta = () =>
     title: "Projects | caseyjkelly.com",
     path: "/projects",
     description:
-      "Projects by Casey Kelly-Ajbani: FantasyPhish, a fantasy game for Phish tours, and Kelso Kelly Music, a musician's site that syncs from Google Calendar and Drive.",
+      "Projects by Casey Kelly-Ajbani: FantasyPhish, a fantasy game for Phish tours; Curbcut, an AI agent that fixes accessibility bugs, in progress; Kelso Kelly Music, a musician's site that syncs from Google Calendar and Drive; and this site.",
   });
 
-const projects = [
+interface Project {
+  name: string;
+  tagline: string;
+  // shown as a badge next to the name, for projects that aren't finished
+  status?: string;
+  description: string;
+  stats?: { value: string; label: string }[];
+  image: string;
+  imageAlt: string;
+  stack: string[];
+  // the live site; projects without one link only to their source
+  href?: string;
+  hrefLabel?: string;
+  source: string;
+}
+
+const projects: Project[] = [
   {
     name: "FantasyPhish",
     tagline: "Fantasy sports for Phish fans",
@@ -45,6 +61,27 @@ const projects = [
     source: "https://github.com/CaseyKelly/fantasyphish",
   },
   {
+    name: "Curbcut",
+    tagline: "Accessibility fixes in a pull request you approve",
+    status: "Currently building",
+    description:
+      "An AI agent that finds accessibility bugs and fixes them. Point it at a URL and it scans the page against WCAG 2.1 AA, explains each issue in plain language, finds the React component in your repo that causes it, and drafts a minimal fix. Nothing changes until a person approves the diff; then it opens a pull request and re-scans the preview deploy. Prompt changes have to beat an eval suite, not just a demo. I'm building it now with Upasana Kelly-Ajbani.",
+    image: "/projects/curbcut.webp",
+    imageAlt: "Curbcut banner over a concept mockup of a scan in the terminal",
+    stack: [
+      "Next.js",
+      "TypeScript",
+      "Claude API",
+      "axe-core",
+      "Playwright",
+      "Drizzle",
+      "Postgres",
+      "Zod",
+      "Vitest",
+    ],
+    source: "https://github.com/CaseyKelly/Curbcut",
+  },
+  {
     name: "Kelso Kelly Music",
     tagline: "A musician's website that runs itself",
     description:
@@ -66,6 +103,25 @@ const projects = [
     hrefLabel: "Visit kelsokellymusic.com",
     source: "https://github.com/CaseyKelly/kelso-kelly-site",
   },
+  {
+    name: "caseyjkelly.com",
+    tagline: "The site you're on",
+    description:
+      "My personal site: an interactive starfield behind a name that leans toward your cursor, and a terminal tagline that keeps typing. Every animation respects reduced-motion settings. There's no server: every page is prerendered to static HTML at build time, and Playwright tests on desktop and mobile Chrome fail on any console error or broken asset.",
+    image: "/projects/caseyjkelly.webp",
+    imageAlt: "caseyjkelly.com home page: the name over a constellation",
+    stack: [
+      "React Router",
+      "TypeScript",
+      "Tailwind CSS",
+      "GSAP",
+      "Motion",
+      "Vitest",
+      "Playwright",
+      "Vercel",
+    ],
+    source: "https://github.com/CaseyKelly/caseyjkelly",
+  },
 ];
 
 export default function Projects() {
@@ -83,7 +139,7 @@ export default function Projects() {
               <Card>
                 <article className="relative z-20 grid gap-6 p-4 md:grid-cols-[1.15fr_1fr] md:gap-10 md:p-8">
                   <Link
-                    to={project.href}
+                    to={project.href ?? project.source}
                     target="_blank"
                     tabIndex={-1}
                     aria-hidden="true"
@@ -104,9 +160,20 @@ export default function Projects() {
                     />
                   </Link>
                   <div className="flex flex-col justify-center">
-                    <h2 className="text-2xl text-white font-display md:text-3xl">
-                      {project.name}
-                    </h2>
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-2">
+                      <h2 className="text-2xl text-white font-display md:text-3xl">
+                        {project.name}
+                      </h2>
+                      {project.status && (
+                        <p className="inline-flex items-center gap-1.5 px-2 py-0.5 text-xs font-medium rounded-full text-amber-200 bg-amber-400/10 ring-1 ring-amber-300/30">
+                          <span
+                            aria-hidden="true"
+                            className="w-1.5 h-1.5 rounded-full bg-amber-300 animate-pulse motion-reduce:animate-none"
+                          />
+                          {project.status}
+                        </p>
+                      )}
+                    </div>
                     <p className="mt-1 text-sm font-medium text-indigo-300">
                       {project.tagline}
                     </p>
@@ -144,14 +211,19 @@ export default function Projects() {
                       ))}
                     </ul>
                     <div className="flex flex-wrap gap-3 mt-6">
-                      <Link
-                        to={project.href}
-                        target="_blank"
-                        className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md hover:bg-indigo-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
-                      >
-                        {project.hrefLabel}
-                        <ArrowUpRight className="w-4 h-4" aria-hidden="true" />
-                      </Link>
+                      {project.href && (
+                        <Link
+                          to={project.href}
+                          target="_blank"
+                          className="inline-flex items-center gap-1.5 px-4 py-2 text-sm font-medium text-black transition-colors bg-white rounded-md hover:bg-indigo-100 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70 focus-visible:ring-offset-2 focus-visible:ring-offset-black"
+                        >
+                          {project.hrefLabel}
+                          <ArrowUpRight
+                            className="w-4 h-4"
+                            aria-hidden="true"
+                          />
+                        </Link>
+                      )}
                       <Link
                         to={project.source}
                         target="_blank"
