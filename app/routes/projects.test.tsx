@@ -109,17 +109,27 @@ describe("Projects page", () => {
       renderWithRouter(Projects);
       const card = within(projectCard(name));
 
-      const links = card.getAllByRole("link");
-      expect(links).toHaveLength(1);
-      expect(links[0]).toHaveAccessibleName("View source");
-      expect(links[0]).toHaveAttribute("href", sourceHref);
-      expect(links[0]).toHaveAttribute("target", "_blank");
+      expect(
+        card.queryByRole("link", { name: /^(Play at|Visit) / }),
+      ).not.toBeInTheDocument();
+      const source = card.getByRole("link", { name: "View source" });
+      expect(source).toHaveAttribute("href", sourceHref);
+      expect(source).toHaveAttribute("target", "_blank");
 
       const imageLink = card.getByAltText(imageAlt).closest("a");
       expect(imageLink).toHaveAttribute("href", sourceHref);
       expect(imageLink).toHaveAttribute("aria-hidden", "true");
     },
   );
+
+  it("links to Upasana's GitHub from the Curbcut card", () => {
+    renderWithRouter(Projects);
+    const card = within(projectCard("Curbcut"));
+
+    const link = card.getByRole("link", { name: "@UpasanaAjbani" });
+    expect(link).toHaveAttribute("href", "https://github.com/UpasanaAjbani");
+    expect(link).toHaveAttribute("target", "_blank");
+  });
 
   it("marks only Curbcut as in progress", () => {
     renderWithRouter(Projects);

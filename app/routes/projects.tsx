@@ -1,4 +1,5 @@
 import { ArrowUpRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { Github } from "../components/brand-icons";
 import { Link } from "react-router";
 import { Card } from "../components/card";
@@ -19,7 +20,7 @@ interface Project {
   tagline: string;
   // shown as a badge next to the name, for projects that aren't finished
   status?: string;
-  description: string;
+  description: ReactNode;
   stats?: { value: string; label: string }[];
   image: string;
   imageAlt: string;
@@ -64,8 +65,25 @@ const projects: Project[] = [
     name: "Curbcut",
     tagline: "Accessibility fixes in a pull request you approve",
     status: "Currently building",
-    description:
-      "An AI agent that finds accessibility bugs and fixes them. Point it at a URL and it scans the page against WCAG 2.1 AA, explains each issue in plain language, finds the React component in your repo that causes it, and drafts a minimal fix. Nothing changes until a person approves the diff; then it opens a pull request and re-scans the preview deploy. Prompt changes have to beat an eval suite, not just a demo.",
+    description: (
+      <>
+        An AI agent that finds accessibility bugs and fixes them. Point it at a
+        URL and it scans the page against WCAG 2.1 AA, explains each issue in
+        plain language, finds the React component in your repo that causes it,
+        and drafts a minimal fix. Nothing changes until a person approves the
+        diff; then it opens a pull request and re-scans the preview deploy.
+        Prompt changes have to beat an eval suite, not just a demo. I'm building
+        it now with my wife,{" "}
+        <Link
+          to="https://github.com/UpasanaAjbani"
+          target="_blank"
+          className="text-indigo-300 underline underline-offset-2 hover:text-indigo-200 focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-indigo-300/70 rounded-sm"
+        >
+          @UpasanaAjbani
+        </Link>
+        .
+      </>
+    ),
     image: "/projects/curbcut.webp",
     imageAlt: "Curbcut banner over a concept mockup of a scan in the terminal",
     stack: [
